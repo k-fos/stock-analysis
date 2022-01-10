@@ -1,3 +1,4 @@
+
 Sub AllStocksAnalysisRefactored()
 
     outputSheet = "All Stocks Refactored"
@@ -20,7 +21,7 @@ Sub AllStocksAnalysisRefactored()
     
     'Initialize array of all tickers
     Dim tickers(11) As String
-    
+
     tickers(0) = "AY"
     tickers(1) = "CSIQ"
     tickers(2) = "DQ"
@@ -53,29 +54,32 @@ Sub AllStocksAnalysisRefactored()
     For i = 0 To UBound(tickers)
         tickerVolumes(i) = 0
     Next i
-        
+    
     ''2b) Loop over all the rows in the spreadsheet.
     For i = 2 To RowCount
     
-        curTicker = Cells(i, 1).Value
-        nextTicker = Cells(i + 1, 1).Value
-        prevTicker = Cells(i - 1, 1).Value
-        
+        'get values for logic
+        curRow = Cells(i, 1).Value
+        nextRow = Cells(i + 1, 1).Value
+        prevRow = Cells(i - 1, 1).Value
+        volume = Cells(i, 8).Value
+        price = Cells(i, 6).Value
+                
         '3a) Increase volume for current ticker
-        tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+        tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + volume
         
         '3b) Check if the current row is the first row with the selected tickerIndex.
-        If curTicker = tickers(tickerIndex) And curTicker <> prevTicker Then
+        If curRow = tickers(tickerIndex) And curRow <> prevRow Then
         
-            tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+            tickerStartingPrices(tickerIndex) = price
             
         End If
         
         '3c) check if the current row is the last row with the selected ticker
         'If the next rowâ€™s ticker doesnâ€™t match, increase the tickerIndex.
-        If curTicker <> nextTicker Then
+        If curRow <> nextRow Then
 
-            tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+            tickerEndingPrices(tickerIndex) = price
             
             '3d Increase the tickerIndex.
             tickerIndex = tickerIndex + 1
