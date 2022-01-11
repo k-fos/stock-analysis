@@ -65,7 +65,7 @@ Next i
 The result was an 83% improvement in processing time.  The performance gains are highlighted in the below images that show the execution time before and after the refactor.
 
 ## Before
-![](./resources/module_2018.png)
+![](./resources/Module_2018.png)
 
 ## After
 ![](./resources/VBA_Challenge_2018.png)
