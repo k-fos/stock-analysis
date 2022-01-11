@@ -9,7 +9,7 @@ The goal of the project was to refactor the code for improved maintainability an
 # Results
 
 ### Performance Comparison 
-The stock performance between 2017 and 2018 was drastic.  Year 2017 ended with 11 of 12 stocks with positive returns, the highest almost reaching 200%.  Year 2018 ended with 2 of 12 stocks with positive returns.
+The stock performance between 2017 and 2018 was drastic.  Year 2017 ended with 11 of 12 stocks with positive returns, the highest almost reaching 200% return.  Year 2018 ended with 2 of 12 stocks with positive returns.
 
 ![2017 and 2018 performance](./resources/2017_2018_performance.png)
 
@@ -64,15 +64,54 @@ Next i
 
 The result was an 83% improvement in processing time.  The performance gains are highlighted in the below images that show the execution time before and after the refactor.
 
-## Before
+### Before
 ![](./resources/Module_2018.png)
 
-## After
+### After
 ![](./resources/VBA_Challenge_2018.png)
 
 > Note: processing time improvements were the same for 2017 & 2018 dataset
 
 # Summary
 
-1. What are the advantages or disadvantages of refactoring code?
-2. How do these pros and cons apply to refactoring the original VBA script?
+## What are the advantages or disadvantages of refactoring code?
+The clear advantages of refactoring code is performance, maintainability, readability, and improved quality. The additional time spent refactoring an existing codebase reduces the risk of furture bugs and extends the lifespan of the application.
+
+*Example Advantages*
+
+- Reduces the need for verbose comments / lines of code
+- Decreases time needed for a new engineer to understand codebase
+- Eliminate redundant code
+- Increase reusability and reduce risk of logical bugs
+
+One disadvantage of refactoring is the potential of overengineering an application or service.  Spending too much time refactoring code that is not exposed to change could result in wasted time and investment.
+
+## How do these pros and cons apply to refactoring the original VBA script?
+
+*Examples of Code Improvements*
+
+- Change hard-coded values 
+
+    ```
+    For i = 0 to 11
+    ```
+
+    To functions to dynamically retrieve value
+
+    ```
+    For i = 0 to UBound(tickers)
+    ```
+
+- Change references to framework functions
+
+    ```vbnet
+    If Cells(j + 1, 1).Value <> Ticker And Cells(j, 1).Value = Ticker Then
+        endingPrice = Cells(j, 6).Value
+    ```
+
+    To named variables
+
+    ```vbnet
+    If curRow <> nextRow Then
+        tickerEndingPrices(tickerIndex) = price
+    ```
