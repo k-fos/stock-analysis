@@ -8,13 +8,69 @@ The goal of the project was to refactor the code for improved maintainability an
 
 # Results
 
-Using images and examples of your code, compare the stock performance between 2017 and 2018, as well as the execution times of the original script and the refactored script.
-
+### Performance Comparison 
 The stock performance between 2017 and 2018 was drastic.  Year 2017 ended with 11 of 12 stocks with positive returns, the highest almost reaching 200%.  Year 2018 ended with 2 of 12 stocks with positive returns.
 
-### Performance Comparison 
 ![2017 and 2018 performance](./resources/2017_2018_performance.png)
 
+### Original Code vs Refactored
+The refactored code out performed the original code.  The original script processed 36,144 rows compared to 3,012 rows in the refactored script.
+
+```vbnet
+'ORIGINAL
+
+'Loop through tickers first
+For i = 0 To 11
+    
+    Ticker = tickers(i)
+    totalVolume = 0
+    
+    Worksheets(yearValue).Activate
+    
+    'Loop through dataset
+    For j = 2 To RowCount
+```
+
+```vbnet
+'REFACTORED
+
+' Only process each row one time
+For i = 2 To RowCount
+
+    'get values for logic
+    curRow = Cells(i, 1).Value
+    nextRow = Cells(i + 1, 1).Value
+    prevRow = Cells(i - 1, 1).Value
+    volume = Cells(i, 8).Value
+    price = Cells(i, 6).Value
+
+    tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + volume
+    
+    If curRow = tickers(tickerIndex) And curRow <> prevRow Then
+    
+        tickerStartingPrices(tickerIndex) = price
+        
+    End If
+    
+    If curRow <> nextRow Then
+
+        tickerEndingPrices(tickerIndex) = price
+        tickerIndex = tickerIndex + 1
+        
+    End If
+    
+Next i
+```
+
+The result was an 83% improvement in processing time.  The performance gains are highlighted in the below images that show the execution time before and after the refactor.
+
+## Before
+![](./resources/module_2018.png)
+
+## After
+![](./resources/VBA_Challenge_2018.png)
+
+> Note: processing time improvements were the same for 2017 & 2018 dataset
 
 # Summary
 
